@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/quizRandom.dir/src/trial.cpp.o CMakeFiles/quizRandom.dir/headers/crypto.cpp.o  -o quizRandom 
