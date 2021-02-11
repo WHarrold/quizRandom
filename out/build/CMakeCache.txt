@@ -222,10 +222,10 @@ OPENSSL_SSL_LIBRARY:FILEPATH=/usr/local/lib/libssl.so
 PKG_CONFIG_EXECUTABLE:FILEPATH=PKG_CONFIG_EXECUTABLE-NOTFOUND
 
 //Path to a file.
-SQLite3_INCLUDE_DIR:PATH=SQLite3_INCLUDE_DIR-NOTFOUND
+SQLite3_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a library.
-SQLite3_LIBRARY:FILEPATH=SQLite3_LIBRARY-NOTFOUND
+SQLite3_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libsqlite3.so
 
 //Value Computed by CMake
 quizRandom_BINARY_DIR:STATIC=/home/williamfergusonharrold/github/quizRandom/out/build
@@ -389,6 +389,8 @@ CMAKE_UNAME:INTERNAL=/usr/bin/uname
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding OpenSSL
 FIND_PACKAGE_MESSAGE_DETAILS_OpenSSL:INTERNAL=[/usr/local/lib/libcrypto.so][/usr/local/include][c ][v()]
+//Details about finding SQLite3
+FIND_PACKAGE_MESSAGE_DETAILS_SQLite3:INTERNAL=[/usr/include][/usr/lib/x86_64-linux-gnu/libsqlite3.so][v3.31.1()]
 //ADVANCED property for variable: OPENSSL_CRYPTO_LIBRARY
 OPENSSL_CRYPTO_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENSSL_INCLUDE_DIR

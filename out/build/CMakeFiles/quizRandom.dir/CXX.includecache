@@ -19,8 +19,8 @@ openssl/evp.h
 -
 openssl/sha.h
 /home/williamfergusonharrold/github/quizRandom/headers/openssl/sha.h
-sqlite/build/sqlite3.h
-/home/williamfergusonharrold/github/quizRandom/headers/sqlite/build/sqlite3.h
+sqlite3.h
+/home/williamfergusonharrold/github/quizRandom/headers/sqlite3.h
 
 /home/williamfergusonharrold/github/quizRandom/headers/crypto.h
 string
