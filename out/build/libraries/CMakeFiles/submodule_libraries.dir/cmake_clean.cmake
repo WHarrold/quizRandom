@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/submodule_libraries.dir/sqlite/build/sqlite3.c.o"
-  "CMakeFiles/submodule_libraries.dir/ssl/crypto/sha/sha512.c.o"
   "submodule_libraries"
   "submodule_libraries.pdb"
 )

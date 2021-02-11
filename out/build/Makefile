@@ -123,19 +123,6 @@ quizRandom/fast:
 	$(MAKE) -f CMakeFiles/quizRandom.dir/build.make CMakeFiles/quizRandom.dir/build
 .PHONY : quizRandom/fast
 
-#=============================================================================
-# Target rules for targets named submodule_libraries
-
-# Build rule for target.
-submodule_libraries: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 submodule_libraries
-.PHONY : submodule_libraries
-
-# fast build rule for target.
-submodule_libraries/fast:
-	$(MAKE) -f libraries/CMakeFiles/submodule_libraries.dir/build.make libraries/CMakeFiles/submodule_libraries.dir/build
-.PHONY : submodule_libraries/fast
-
 headers/crypto.o: headers/crypto.cpp.o
 
 .PHONY : headers/crypto.o
@@ -199,7 +186,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... quizRandom"
-	@echo "... submodule_libraries"
 	@echo "... headers/crypto.o"
 	@echo "... headers/crypto.i"
 	@echo "... headers/crypto.s"

@@ -6,5 +6,5 @@ C_FLAGS =
 
 C_DEFINES = 
 
-C_INCLUDES = -I/home/williamfergusonharrold/github/quizRandom -I/home/williamfergusonharrold/github/quizRandom/libraries -I/home/williamfergusonharrold/github/quizRandom/libraries/ssl/include/crypto -I/home/williamfergusonharrold/github/quizRandom/libraries/sqlite/build 
+C_INCLUDES = -I/home/williamfergusonharrold/github/quizRandom -I/home/williamfergusonharrold/github/quizRandom/libraries/libraries -I/home/williamfergusonharrold/github/quizRandom/libraries/libraries/sqlite/build 
 

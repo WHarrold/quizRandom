@@ -152,33 +152,6 @@ sqlite/build/sqlite3.c.s:
 	cd /home/williamfergusonharrold/github/quizRandom/out/build && $(MAKE) -f libraries/CMakeFiles/submodule_libraries.dir/build.make libraries/CMakeFiles/submodule_libraries.dir/sqlite/build/sqlite3.c.s
 .PHONY : sqlite/build/sqlite3.c.s
 
-ssl/crypto/sha/sha512.o: ssl/crypto/sha/sha512.c.o
-
-.PHONY : ssl/crypto/sha/sha512.o
-
-# target to build an object file
-ssl/crypto/sha/sha512.c.o:
-	cd /home/williamfergusonharrold/github/quizRandom/out/build && $(MAKE) -f libraries/CMakeFiles/submodule_libraries.dir/build.make libraries/CMakeFiles/submodule_libraries.dir/ssl/crypto/sha/sha512.c.o
-.PHONY : ssl/crypto/sha/sha512.c.o
-
-ssl/crypto/sha/sha512.i: ssl/crypto/sha/sha512.c.i
-
-.PHONY : ssl/crypto/sha/sha512.i
-
-# target to preprocess a source file
-ssl/crypto/sha/sha512.c.i:
-	cd /home/williamfergusonharrold/github/quizRandom/out/build && $(MAKE) -f libraries/CMakeFiles/submodule_libraries.dir/build.make libraries/CMakeFiles/submodule_libraries.dir/ssl/crypto/sha/sha512.c.i
-.PHONY : ssl/crypto/sha/sha512.c.i
-
-ssl/crypto/sha/sha512.s: ssl/crypto/sha/sha512.c.s
-
-.PHONY : ssl/crypto/sha/sha512.s
-
-# target to generate assembly for a file
-ssl/crypto/sha/sha512.c.s:
-	cd /home/williamfergusonharrold/github/quizRandom/out/build && $(MAKE) -f libraries/CMakeFiles/submodule_libraries.dir/build.make libraries/CMakeFiles/submodule_libraries.dir/ssl/crypto/sha/sha512.c.s
-.PHONY : ssl/crypto/sha/sha512.c.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -191,9 +164,6 @@ help:
 	@echo "... sqlite/build/sqlite3.o"
 	@echo "... sqlite/build/sqlite3.i"
 	@echo "... sqlite/build/sqlite3.s"
-	@echo "... ssl/crypto/sha/sha512.o"
-	@echo "... ssl/crypto/sha/sha512.i"
-	@echo "... ssl/crypto/sha/sha512.s"
 .PHONY : help
 
 

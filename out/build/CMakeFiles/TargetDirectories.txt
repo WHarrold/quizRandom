@@ -1,6 +1,3 @@
 /home/williamfergusonharrold/github/quizRandom/out/build/CMakeFiles/rebuild_cache.dir
 /home/williamfergusonharrold/github/quizRandom/out/build/CMakeFiles/edit_cache.dir
 /home/williamfergusonharrold/github/quizRandom/out/build/CMakeFiles/quizRandom.dir
-/home/williamfergusonharrold/github/quizRandom/out/build/libraries/CMakeFiles/rebuild_cache.dir
-/home/williamfergusonharrold/github/quizRandom/out/build/libraries/CMakeFiles/edit_cache.dir
-/home/williamfergusonharrold/github/quizRandom/out/build/libraries/CMakeFiles/submodule_libraries.dir

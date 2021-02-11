@@ -6,5 +6,5 @@ CXX_FLAGS =   -std=gnu++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/williamfergusonharrold/github/quizRandom -I/home/williamfergusonharrold/github/quizRandom/libraries -I/home/williamfergusonharrold/github/quizRandom/libraries/ssl/include/crypto -I/home/williamfergusonharrold/github/quizRandom/libraries/sqlite/build 
+CXX_INCLUDES = -I/home/williamfergusonharrold/github/quizRandom 
 

@@ -1,1 +1,1 @@
-/usr/bin/cc    CMakeFiles/submodule_libraries.dir/sqlite/build/sqlite3.c.o CMakeFiles/submodule_libraries.dir/ssl/crypto/sha/sha512.c.o  -o submodule_libraries 
+/usr/bin/cc    CMakeFiles/submodule_libraries.dir/sqlite/build/sqlite3.c.o  -o submodule_libraries 

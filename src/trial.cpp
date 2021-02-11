@@ -2,7 +2,8 @@
 #include<iostream>
 #include"headers/crypto.h"
 
-using namespace std;
+using std::string; using std::cout; 
+using std::endl;
 
 int main ()
 {

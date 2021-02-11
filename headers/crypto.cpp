@@ -4,7 +4,7 @@
 #include<random>
 #include"crypto.h"
 #include <openssl/evp.h>
-#include "ssl/crypto/sha.h"
+#include "openssl/sha.h"
 #include"sqlite/build/sqlite3.h"
 
 //thus functiin takes a string, which will be a password but could be used to hash any string, it using the sha512 algorithm

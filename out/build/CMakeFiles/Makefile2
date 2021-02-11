@@ -54,38 +54,18 @@ CMAKE_BINARY_DIR = /home/williamfergusonharrold/github/quizRandom/out/build
 
 # The main recursive "all" target.
 all: CMakeFiles/quizRandom.dir/all
-all: libraries/all
 
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: libraries/preinstall
+preinstall:
 
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: CMakeFiles/quizRandom.dir/clean
-clean: libraries/clean
 
 .PHONY : clean
-
-#=============================================================================
-# Directory level rules for directory libraries
-
-# Recursive "all" directory target.
-libraries/all: libraries/CMakeFiles/submodule_libraries.dir/all
-
-.PHONY : libraries/all
-
-# Recursive "preinstall" directory target.
-libraries/preinstall:
-
-.PHONY : libraries/preinstall
-
-# Recursive "clean" directory target.
-libraries/clean: libraries/CMakeFiles/submodule_libraries.dir/clean
-
-.PHONY : libraries/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/quizRandom.dir
@@ -113,33 +93,6 @@ quizRandom: CMakeFiles/quizRandom.dir/rule
 CMakeFiles/quizRandom.dir/clean:
 	$(MAKE) -f CMakeFiles/quizRandom.dir/build.make CMakeFiles/quizRandom.dir/clean
 .PHONY : CMakeFiles/quizRandom.dir/clean
-
-#=============================================================================
-# Target rules for target libraries/CMakeFiles/submodule_libraries.dir
-
-# All Build rule for target.
-libraries/CMakeFiles/submodule_libraries.dir/all:
-	$(MAKE) -f libraries/CMakeFiles/submodule_libraries.dir/build.make libraries/CMakeFiles/submodule_libraries.dir/depend
-	$(MAKE) -f libraries/CMakeFiles/submodule_libraries.dir/build.make libraries/CMakeFiles/submodule_libraries.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/williamfergusonharrold/github/quizRandom/out/build/CMakeFiles --progress-num=4,5,6 "Built target submodule_libraries"
-.PHONY : libraries/CMakeFiles/submodule_libraries.dir/all
-
-# Build rule for subdir invocation for target.
-libraries/CMakeFiles/submodule_libraries.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/williamfergusonharrold/github/quizRandom/out/build/CMakeFiles 3
-	$(MAKE) -f CMakeFiles/Makefile2 libraries/CMakeFiles/submodule_libraries.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/williamfergusonharrold/github/quizRandom/out/build/CMakeFiles 0
-.PHONY : libraries/CMakeFiles/submodule_libraries.dir/rule
-
-# Convenience name for target.
-submodule_libraries: libraries/CMakeFiles/submodule_libraries.dir/rule
-
-.PHONY : submodule_libraries
-
-# clean rule for target.
-libraries/CMakeFiles/submodule_libraries.dir/clean:
-	$(MAKE) -f libraries/CMakeFiles/submodule_libraries.dir/build.make libraries/CMakeFiles/submodule_libraries.dir/clean
-.PHONY : libraries/CMakeFiles/submodule_libraries.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/williamfergusonharrold/github/quizRandom/headers/crypto.cpp
+string
+-
+cstring
+-
+random
+-
+crypto.h
+/home/williamfergusonharrold/github/quizRandom/headers/crypto.h
+openssl/evp.h
+-
+openssl/sha.h
+/home/williamfergusonharrold/github/quizRandom/headers/openssl/sha.h
+sqlite/build/sqlite3.h
+/home/williamfergusonharrold/github/quizRandom/headers/sqlite/build/sqlite3.h
+
+/home/williamfergusonharrold/github/quizRandom/headers/crypto.h
+string
+-
+
