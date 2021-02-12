@@ -15,12 +15,12 @@ std::string create_hash(const std::string &input)
   const unsigned char *salt = nullptr;
   unsigned char key[32] = {0};
 
-  PKCS5_PBKDF2_HMAC(input.c_str(), inp        ut.size(),
+  PKCS5_PBKDF2_HMAC(input.c_str(), input.size(),
         salt, 0,
         iter, EVP_sha256(),
         sizeof(key), key);
 
-  std::string hashed = key;
+  std::string hashed= reinterpret_cast<char*>(key);
   return hashed;
 
 }
@@ -38,7 +38,7 @@ bool create_password (std::string password, const std::string &username, const s
   std::string hashed;
   //we create a 32 bit string to ne added to the password
   //salt is unknown to everyone and a new salt is create each time
-  str::string salt = create_salt();
+  std::string salt = create_salt();
 
   password += salt;
   //now we create the hash 

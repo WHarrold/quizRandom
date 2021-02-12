@@ -6,23 +6,3 @@
 
 #IncludeRegexTransform: 
 
-/home/williamfergusonharrold/github/quizRandom/headers/crypto.cpp
-string
--
-cstring
--
-random
--
-crypto.h
-/home/williamfergusonharrold/github/quizRandom/headers/crypto.h
-openssl/evp.h
--
-openssl/sha.h
-/home/williamfergusonharrold/github/quizRandom/headers/openssl/sha.h
-sqlite3.h
-/home/williamfergusonharrold/github/quizRandom/headers/sqlite3.h
-
-/home/williamfergusonharrold/github/quizRandom/headers/crypto.h
-string
--
-
