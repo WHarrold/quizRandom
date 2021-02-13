@@ -1,3 +1,0 @@
-/home/williamfergusonharrold/github/quizRandom/out/build/CMakeFiles/rebuild_cache.dir
-/home/williamfergusonharrold/github/quizRandom/out/build/CMakeFiles/edit_cache.dir
-/home/williamfergusonharrold/github/quizRandom/out/build/CMakeFiles/quizRandom.dir

@@ -1,1 +1,0 @@
-/usr/bin/c++   -std=c++11 -l sqlite3   CMakeFiles/quizRandom.dir/src/trial.cpp.o CMakeFiles/quizRandom.dir/headers/crypto.cpp.o  -o quizRandom  -Wl,-rpath,/usr/local/lib /usr/local/lib/libcrypto.so 

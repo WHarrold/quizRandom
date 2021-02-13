@@ -1,3 +1,5 @@
 #! /bin/sh
 
-cd out/build; make clean
+cd out/build;
+
+rm *

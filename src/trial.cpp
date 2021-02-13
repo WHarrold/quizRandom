@@ -14,12 +14,17 @@ int main ()
   string rightpword ( "right password");
   string wrongpword ( "wrong password");
   string hashed;
+  string salt;
+  cout << rightpword << endl;
+
   for(int i=0;i<5;++i){
+    salt = create_salt();
+    rightpword += salt;
     hashed = create_hash(rightpword);
     cout << hashed << endl;
   }
  
-  string db= "data.dat";
+  string db= "data.db";
   string un= "thug rose";
   bool rc;
 
