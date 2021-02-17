@@ -7,13 +7,14 @@ using std::endl;
 
 int main ()
 {
-  cout << "thiss is antest of crypto library." << endl;
+  cout << "this is a test of crypto library." << endl;
   cout << "this will check we get the same password every time" << endl;
 
   cout << "create hash:" << endl;
-  string rightpword ( "right password");
-  string wrongpword ( "wrong password");
+  string rightpword = "rightpassword";
+  string wrongpword = "wrongpassword";
   string hashed;
+  string hashed2;
   string salt;
   cout << rightpword << endl;
 
@@ -21,7 +22,10 @@ int main ()
     salt = create_salt();
     rightpword += salt;
     hashed = create_hash(rightpword);
-    cout << hashed << endl;
+    hashed2 = create_hash(rightpword);
+    cout << hashed << '\n'<< hashed2 << '\n'<< endl;
+    (hashed == hashed2)? cout <<"hashes are equal" :cout <<"hashes are not equal" ;
+    cout << endl;
   }
  
   string db= "data.db";
@@ -33,29 +37,29 @@ int main ()
   if (rc)
     cout << "password was created" << endl;
   else
-    cout << "password was not creates" << endl;
-  cout<< "check password" << endl;
-  cout << "checking right password:" << endl;
+    cout << "password was not created" << endl;
+  cout<< '\n'<<'\n'<< "checking passwords" << endl;
+  cout << "checking the right password:" << endl;
   rc = check_password (rightpword,un,db);
   if (rc)
     cout << "this password is correct" << endl;
   else
     cout << "this password is incorrect" << endl;
- cout << "checking wrong password" << endl;
+ cout <<'\n'<< "checking wrong password" << endl;
  rc = check_password(wrongpword,un,db);
  if (rc)
     cout << "this password is correct" << endl;
  else
     cout << "this password is incorrect" << endl;
- cout << "changing password" << endl;
+ cout << '\n'<<'\n'<<"changing password" << endl;
  string _new("anny");
  rc= change_password(_new,un,db);
   if (rc)
-    cout << "this password is correct" << endl;
+    cout << "this password was changed" << endl;
   else
-    cout << "this password is incorrect" << endl;
+    cout << "this password was not changes" << endl;
    
- cout << "just for kicks let's check the new password" << endl;
+ cout << '\n'<<'\n'<<"just for kicks let's check the new password" << endl;
  rc = check_password(_new,un,db);
  if (rc)
     cout << "this password is correct" << endl;
