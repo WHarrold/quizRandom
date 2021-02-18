@@ -40,7 +40,6 @@ bool create_password (std::string password, const std::string &username, const s
 
   //first we open the database 
   sqlite3 *pDB;
-  //going to input a database name directly to see if it will run now.
   if (SQLITE_OK != (rc= sqlite3_open_v2(database.c_str(),&pDB,SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL)))
   {
     std::cout << "Failed to open database: " << rc << std::endl;
@@ -144,13 +143,12 @@ bool check_password (std::string password, const std::string &username, const st
 
   //if we are still here password and salt were found
   std::string salt;
-  char cBuffer[1024];
-  char bBuffer[1024];
   std::string curPword;
-  sprintf(cBuffer,"%s",sqlite3_column_text(pStmt,1));
-  curPword= cBuffer;
-  sprintf(bBuffer,"%s",sqlite3_column_text(pStmt,2));
-  salt= bBuffer;
+  
+  curPword.assign((const char*)sqlite3_column_text(pStmt,0), sqlite3_column_bytes(pStmt,0));
+  std::cout<<"password: " << curPword << std::endl;
+  salt.assign((const char*)sqlite3_column_text(pStmt,1), sqlite3_column_bytes(pStmt,1));
+  std::cout<<"salt: " << salt << std::endl;
   sqlite3_finalize(pStmt);
   sqlite3_close(pDB);
   //now we compare thengiven password to the password stored in the database 
