@@ -13,13 +13,13 @@
 //thus functiin takes a string, which will be a password but could be used to hash any string, it using the sha512 algorithm
 std::string create_hash(const std::string &input)
 {
-  unsigned char hash[SHA256_DIGEST_LENGTH];
-  SHA256_CTX sha256;
-  SHA256_Init(&sha256);
-  SHA256_Update(&sha256, input.c_str(), input.size());
-  SHA256_Final(hash, &sha256);
+  unsigned char hash[SHA512_DIGEST_LENGTH];
+  SHA512_CTX sha256;
+  SHA512_Init(&sha256);
+  SHA512_Update(&sha256, input.c_str(), input.size());
+  SHA512_Final(hash, &sha256);
   std::stringstream ss;
-  for(int i = 0; i < SHA256_DIGEST_LENGTH; ++i)
+  for(int i = 0; i < SHA512_DIGEST_LENGTH; ++i)
   {
     ss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
   }
@@ -68,13 +68,16 @@ bool create_password (std::string password, const std::string &username, const s
     sqlite3_close(pDB);
     return false;
   }
-if (SQLITE_DONE != (sqlite3_step(pStmt)))
-{
-  std::cout << "Didn't Create Table!" <<std::endl;
-  sqlite3_finalize(pStmt);
-  sqlite3_close(pDB);
-  return false;
-}
+  if (SQLITE_DONE != (sqlite3_step(pStmt)))
+  {
+    std::cout << "Didn't Create Table!" <<std::endl;
+    sqlite3_finalize(pStmt);
+    sqlite3_close(pDB);
+    return false;
+  }
+
+  if (SQLITE_OK !=(rc=sqlite3_finalize(pStmt)))
+    std::cout << "Failed to create table!: " << rc << sqlite3_errmsg(pDB) << std::endl;
   //if we are here then the table created or alreasy existed now we insert the data 
   sql= "INSERT INTO users ('USERNAME', 'PASSWORD', 'SALT') VALUES (?1,?2,?3)";
  if  (SQLITE_OK != (rc = sqlite3_prepare_v2(pDB,sql.c_str(),sql.size(),&pStmt,nullptr)))
@@ -129,7 +132,7 @@ bool check_password (std::string password, const std::string &username, const st
   //check for password and salt
   for (;;) 
   { 
-    rc = sqlite3_step(stmt); 
+    rc = sqlite3_step(pStmt); 
     if (rc == SQLITE_DONE) 
       break; 
     if (rc != SQLITE_ROW) 
