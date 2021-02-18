@@ -32,14 +32,17 @@ bool create_password (std::string password, const std::string &username, const s
 {
 
   int rc;
-  if (SQLITE_OK != (rc = sqlite3_initialize())) { std::cout << "Failed to initialize library: " << rc << std::endl;
+  if (SQLITE_OK != (rc = sqlite3_initialize())) 
+  {
+    std::cout << "Failed to initialize library: " << rc << std::endl;
     return false;
   }
 
   //first we open the database 
   sqlite3 *pDB;
   //going to input a database name directly to see if it will run now.
-  if (SQLITE_OK != (rc= sqlite3_open_v2(database.c_str(),&pDB,SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL))){
+  if (SQLITE_OK != (rc= sqlite3_open_v2(database.c_str(),&pDB,SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL)))
+  {
     std::cout << "Failed to open database: " << rc << std::endl;
     return false;
   }
@@ -57,7 +60,7 @@ bool create_password (std::string password, const std::string &username, const s
   //changed sql from string to char*
   std::string sql= "CREATE TABLE IF NOT EXISTS users( USERNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL, SALT TEXT NOT NULL);";
   sqlite3_stmt *pStmt = nullptr;
-  if (SQLITE_OK != (rc = sqlite3_prepare_v2(pDB,sql.c_str(),sql.size(),&pStmt,nullptr)))
+  if (SQLITE_OK != (rc=sqlite3_prepare_v2(pDB,sql.c_str(),sql.size(),&pStmt,nullptr)))
   //if table was not created
   {
     std::cout << "Failed to create table: " << rc << sqlite3_errmsg(pDB) << std::endl;
@@ -65,9 +68,15 @@ bool create_password (std::string password, const std::string &username, const s
     sqlite3_close(pDB);
     return false;
   }
-if (SQLITE_DONE != (sqlite3_step(pStmt))) std::cout << "Didn't Create Table!" <<std::endl;
+if (SQLITE_DONE != (sqlite3_step(pStmt)))
+{
+  std::cout << "Didn't Create Table!" <<std::endl;
+  sqlite3_finalize(pStmt);
+  sqlite3_close(pDB);
+  return false;
+}
   //if we are here then the table created or alreasy existed now we insert the data 
-  sql= "INSERT INTO users (USERNAME,PASSWORD,SALT) VALUES (?1,?2,?3)";
+  sql= "INSERT INTO users ('USERNAME', 'PASSWORD', 'SALT') VALUES (?1,?2,?3)";
  if  (SQLITE_OK != (rc = sqlite3_prepare_v2(pDB,sql.c_str(),sql.size(),&pStmt,nullptr)))
   {
     std::cout << "Failed to create insert: " << rc << " " << sqlite3_errmsg(pDB) << std::endl;
@@ -78,13 +87,14 @@ if (SQLITE_DONE != (sqlite3_step(pStmt))) std::cout << "Didn't Create Table!" <<
   //if (SQLITE_DONE != (sqlite3_step(pStmt))) std::cout << "Didn't Create Insert!" <<std::endl;
   //now we bind the arguments to the statement to be givin to sqlite3
 
- sqlite3_bind_text(pStmt,1,username.c_str(),username.size(),nullptr);
-   sqlite3_bind_text(pStmt,2,hashed.c_str(),hashed.size(),nullptr);
-   sqlite3_bind_text(pStmt,3,salt.c_str(),salt.size(),nullptr);
+rc =  sqlite3_bind_text(pStmt,1,username.c_str(),username.size(),nullptr);
+rc =   sqlite3_bind_text(pStmt,2,hashed.c_str(),hashed.size(),nullptr);
+  rc = sqlite3_bind_text(pStmt,3,salt.c_str(),salt.size(),nullptr);
   //now we place our sql statement with the arguments bound to it in our table
   //if arguments not placed into the table
-  if (sqlite3_step(pStmt) != SQLITE_DONE)
+  if (SQLITE_DONE != (rc=sqlite3_step(pStmt)))
   {
+    std::cout << "Failed to insert username,password,and salt" << " " << sqlite3_errmsg(pDB)<<  std::endl;
     sqlite3_close(pDB);
     sqlite3_finalize(pStmt);
     return false;
@@ -105,43 +115,37 @@ bool check_password (std::string password, const std::string &username, const st
    if (SQLITE_OK != (rc= sqlite3_open(database.c_str(),&pDB)))
     return false;
   //now we create our sqlite3 string to select the password from the table where the user name matches
-  std::string sql= "SELECT PASSWORD FROM users WHERE USERNAME =?";
+  std::string sql= "SELECT PASSWORD, SALT FROM users WHERE USERNAME =?";
   sqlite3_stmt *pStmt= nullptr;
   if (SQLITE_OK != (rc= sqlite3_prepare_v2(pDB,sql.c_str(),sql.size(),&pStmt,nullptr)))
   {
-    std::cout << "Failed to prepare select passwors string: " << rc << " " << sqlite3_errmsg(pDB) << std::endl;
+    std::cout << "Failed to prepare select for passwor and salt string: " << rc << " " << sqlite3_errmsg(pDB) << std::endl;
     sqlite3_finalize(pStmt);
     sqlite3_close(pDB);
     return false;
   }
   //now we bind the username to the sqlite3 statement
-  sqlite3_bind_text(pStmt,1,username.c_str(),username.size(),nullptr);
-  //check for username 
-  if (sqlite3_step(pStmt) != SQLITE_ROW)
-   {
-    std::cout << "Failed at step!" << std::endl;
-    sqlite3_close(pDB);
-    sqlite3_finalize(pStmt);
-    return false;
-   }
-  //if we are still here username was found
+  rc = sqlite3_bind_text(pStmt,1,username.c_str(),username.size(),nullptr);
+  //check for password and salt
+  for (;;) 
+  { 
+    rc = sqlite3_step(stmt); 
+    if (rc == SQLITE_DONE) 
+      break; 
+    if (rc != SQLITE_ROW) 
+    { 
+      std::cout << "Failed to select password and salt: " << rc << " " << sqlite3_errmsg(pDB) << std::endl; 
+      break; 
+    }
+  }
+
+  //if we are still here password and salt were found
   std::string salt;
   char cBuffer[1024];
+  char bBuffer[1024];
   std::string curPword;
   sprintf(cBuffer,"%s",sqlite3_column_text(pStmt,1));
   curPword= cBuffer;
-
-  sql= "SELECT,SALT FROM users WHERE USERNAME =?";
- sqlite3_bind_text(pStmt,1,username.c_str(),username.size(),nullptr);
-
-  char bBuffer[1024];
-  if (sqlite3_step(pStmt) != SQLITE_ROW)
-   {
-    sqlite3_close(pDB);
-    sqlite3_finalize(pStmt);
-    return false;
-   }
-  //if we are still here username was found
   sprintf(bBuffer,"%s",sqlite3_column_text(pStmt,2));
   salt= bBuffer;
   sqlite3_finalize(pStmt);
@@ -150,7 +154,7 @@ bool check_password (std::string password, const std::string &username, const st
   //firsr we must hash the password given using (hensalt that was stored in the database 
   std::string hashed;
   password += salt;
-  hashed=create_hash(password);
+  hashed = create_hash(password);
 
   return hashed==curPword;
 }
@@ -160,75 +164,66 @@ bool change_password (std::string password, const std::string &username, const s
 {
   //first we open the database 
   sqlite3 *pDB;
-  int rc= sqlite3_open(database.c_str(),&pDB);
-  if (rc != SQLITE_OK)
+  sqlite3_stmt *pStmt = nullptr;
+  int rc;
+ 
+
+  if (SQLITE_OK != (rc= sqlite3_open(database.c_str(),&pDB)))
     return false;
+  
+
   //now we prepare our sqlite3 statement
   std::string sql= "UPDATE users SET PASSWORD =?1 WHERE USERNAME =?2";
+ 
+
+  if (SQLITE_OK != (rc= sqlite3_prepare_v2(pDB,sql.c_str(),sql.size(),&pStmt,nullptr)))
+  {
+    std::cout << "Failed to prepare  password: " << rc << " " << sqlite3_errmsg(pDB) << std::endl;
+    sqlite3_finalize(pStmt);
+    sqlite3_close(pDB);
+    return false;
+  }
+  
+
   //now lets generate a new salt and hash the password 
   std::string salt= create_salt();
   password += salt;
   std::string hashed = create_hash(password);
-  //now we bind the usename and password
-  sqlite3_stmt *pStmt = nullptr;
-  rc= sqlite3_prepare_v2(pDB,sql.c_str(),sql.size(),&pStmt,nullptr);
-  if (rc != SQLITE_OK)
-  {
-    sqlite3_close(pDB);
-    sqlite3_finalize(pStmt);
-    return false;
-  }
-rc= sqlite3_bind_text(pStmt,2,username.c_str(),username.size(),nullptr);
-   if (rc != SQLITE_OK)
-  {
-    sqlite3_close(pDB);
-    sqlite3_finalize(pStmt);
-    return false;
-  }
+ 
+//now we bind the usename and password
   rc= sqlite3_bind_text(pStmt,1,password.c_str(),password.size(),nullptr);
-   if (rc != SQLITE_OK)
-  {
-    sqlite3_close(pDB);
-    sqlite3_finalize(pStmt);
-    return false;
-  }
-  if (sqlite3_step(pStmt) != SQLITE_DONE)
+  rc= sqlite3_bind_text(pStmt,2,username.c_str(),username.size(),nullptr);
+
+  if (SQLITE_DONE != (rc=sqlite3_step(pStmt) ))
    {
-    sqlite3_close(pDB);
+     std::cout <<"Failed to insert password!:"<< rc  << sqlite3_errmsg(pDB) << std::endl;
     sqlite3_finalize(pStmt);
+    sqlite3_close(pDB);
     return false;
    }
   //now we must change the salt to the new one
   sql= "UPDATE users SET SALT =?1"
                "WHERE USERNAME =?2";
   sqlite3_finalize(pStmt);
-  rc= sqlite3_prepare_v2(pDB,sql.c_str(),sql.size(),&pStmt,nullptr);
-  if (rc != SQLITE_OK)
+ if (SQLITE_OK != (rc= sqlite3_prepare_v2(pDB,sql.c_str(),sql.size(),&pStmt,nullptr)))
   {
+    std::cout << "Failed to prepare set salt: " << rc << " " << sqlite3_errmsg(pDB) << std::endl;
     sqlite3_close(pDB);
     sqlite3_finalize(pStmt);
     return false;
   }
-rc= sqlite3_bind_text(pStmt,2,username.c_str(),username.size(),nullptr);
-   if (rc != SQLITE_OK)
-  {
-    sqlite3_close(pDB);
-    sqlite3_finalize(pStmt);
-    return false;
-  }
+
   rc= sqlite3_bind_text(pStmt,1,salt.c_str(),salt.size(),nullptr);
-   if (rc != SQLITE_OK)
-  {
-    sqlite3_close(pDB);
-    sqlite3_finalize(pStmt);
-    return false;
-  }
-  if (sqlite3_step(pStmt) != SQLITE_DONE)
+rc= sqlite3_bind_text(pStmt,2,username.c_str(),username.size(),nullptr);
+  
+  if (SQLITE_DONE != (rc=sqlite3_step(pStmt) ))
    {
-    sqlite3_close(pDB);
+     std::cout <<"Failed at set salt step!:"<< rc << " " << sqlite3_errmsg(pDB) << std::endl;
     sqlite3_finalize(pStmt);
+    sqlite3_close(pDB);
     return false;
    }
+ 
   //if we are here then the salt w&s changed, thus we have updated our (hashed) password as well as the salt
   sqlite3_close(pDB);
   sqlite3_finalize(pStmt);
